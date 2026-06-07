@@ -1,6 +1,6 @@
-def main():
-    print("Hello from postulantes!")
+from fastapi import FastAPI
+from src.core.api import api
 
+app = FastAPI()
 
-if __name__ == "__main__":
-    main()
+app.include_router(api)
