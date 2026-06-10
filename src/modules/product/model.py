@@ -9,5 +9,5 @@ class Product(Base):
     name: Mapped[str] = mapped_column(index=True)
     price: Mapped[int] = mapped_column()
     category_product : Mapped[TypeProduct] = mapped_column(Enum(TypeProduct))
-
+    
     
