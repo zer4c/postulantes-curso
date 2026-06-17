@@ -18,6 +18,6 @@ class ProductResponse(ProductBase):
 
 
 class ProductPatch(BaseModel):
-    name: int | None = None
+    name: str | None = None
     price: int | None = None
     category_product: TypeProduct | None = None
