@@ -8,6 +8,7 @@ class Config(BaseSettings):
     db_port: str
     db_name: str
     is_debug: bool = True
+    allowed_origins : list[str]
 
     model_config = SettingsConfigDict(env_file=".env")
 
