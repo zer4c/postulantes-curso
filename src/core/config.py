@@ -9,6 +9,9 @@ class Config(BaseSettings):
     db_name: str
     is_debug: bool = True
     allowed_origins : list[str]
+    secret_key : str
+    algorithm : str
+    hours_session : int
 
     model_config = SettingsConfigDict(env_file=".env")
 

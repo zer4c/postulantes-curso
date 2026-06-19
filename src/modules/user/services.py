@@ -3,6 +3,7 @@ from sqlalchemy import delete, select, update
 from src.core.database import SessionDep
 from src.modules.user.model import User
 from src.modules.user.schemas import UserCreate, UserPatch, UserResponse
+from src.modules.auth.services import AuthService
 
 
 class UserService:
@@ -21,6 +22,7 @@ class UserService:
     @staticmethod
     async def create_user(payload: UserCreate, session: SessionDep):
         try:
+            payload.password = AuthService.hash_password(payload.password)
             user = User(**payload.model_dump())
             session.add(user)
             await session.commit()
@@ -53,3 +55,16 @@ class UserService:
         except:
             await session.rollback()
             raise
+
+    @staticmethod
+    async def authenticate(email: str, password: str, session: SessionDep):
+        user = await session.execute(
+            select(User).where(
+                User.email == email
+                and User.password == AuthService.hash_password(password)
+            )
+        )
+        user_orm = user.scalar_one_or_none()
+        if not user_orm:
+            return None
+        return UserResponse.model_validate(user_orm)
