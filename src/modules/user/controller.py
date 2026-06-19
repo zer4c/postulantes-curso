@@ -1,8 +1,9 @@
-from src.modules.user.services import UserService
-from src.core.database import SessionDep
-from src.modules.user.schemas import UserCreate, UserPatch
-from src.core.response_model import IResponse
 from fastapi import HTTPException
+
+from src.core.database import SessionDep
+from src.core.response_model import IResponse
+from src.modules.user.schemas import UserCreate, UserPatch
+from src.modules.user.services import UserService
 
 
 class UserController:

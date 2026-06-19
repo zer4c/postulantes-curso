@@ -15,7 +15,7 @@ async def lifespan(_app: FastAPI):
     try:
         async with engine.connect() as conn:
             await conn.execute(text("SELECT 1"))
-            # await create_database()
+            await create_database()
     except Exception as e:
         print(e)
     yield

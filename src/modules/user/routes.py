@@ -1,8 +1,9 @@
 from fastapi import APIRouter
-from src.modules.user.schemas import UserCreate, UserPatch
-from src.core.response_model import IResponse
+
 from src.core.database import SessionDep
+from src.core.response_model import IResponse
 from src.modules.user.controller import UserController
+from src.modules.user.schemas import UserCreate, UserPatch
 
 router = APIRouter()
 
