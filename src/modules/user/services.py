@@ -68,3 +68,11 @@ class UserService:
         if not user_orm:
             return None
         return UserResponse.model_validate(user_orm)
+
+    @staticmethod
+    async def get_by_email(email: str, session: SessionDep):
+        user = await session.execute(select(User).where(User.email == email))
+        user_orm = user.scalar_one_or_none()
+        if not user_orm:
+            return None
+        return UserResponse.model_validate(user_orm)

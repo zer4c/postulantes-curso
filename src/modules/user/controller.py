@@ -21,6 +21,9 @@ class UserController:
 
     @staticmethod
     async def create_user(payload: UserCreate, session: SessionDep):
+        user_email = await UserService.get_by_email(payload.email , session)
+        if user_email:
+            raise HTTPException(status_code=400, detail="email already exist")
         user = await UserService.create_user(payload, session)
         return IResponse(code=201, message="user created", data=user)
 

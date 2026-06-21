@@ -7,7 +7,7 @@ from src.modules.auth.controller import AuthController
 router = APIRouter()
 
 
-@router.post("/auth")
+@router.post("/token")
 async def login(
     session: SessionDep, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 ):

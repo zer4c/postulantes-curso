@@ -8,10 +8,10 @@ class AuthController:
     @staticmethod
     async def login(session: SessionDep, form_data: OAuth2PasswordRequestForm):
         password = form_data.password.strip()
-        if len(password) <= 7:
+        if len(password) <= 2:
             raise HTTPException(status_code=400, detail="password small")
         user = await UserService.authenticate(form_data.username, password, session)
         if not user:
             raise HTTPException(status_code=404, detail="user not founded")
         jwt_token = AuthService.login(user)
-        return jwt_token
+        return {"access_token": jwt_token, "token_type": "bearer"}

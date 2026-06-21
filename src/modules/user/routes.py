@@ -1,15 +1,19 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from typing import Annotated
 
 from src.core.database import SessionDep
 from src.core.response_model import IResponse
 from src.modules.user.controller import UserController
-from src.modules.user.schemas import UserCreate, UserPatch
+from src.modules.user.schemas import UserCreate, UserPatch, UserResponse
+from src.core.dependencies import validate_admin
 
 router = APIRouter()
 
 
 @router.get("/", status_code=200, response_model=IResponse)
-async def get_all(session: SessionDep):
+async def get_all(
+    session: SessionDep, _user: Annotated[UserResponse, Depends(validate_admin)]
+):
     return await UserController.get_all(session)
 
 
@@ -29,5 +33,9 @@ async def update_user(id: int, payload: UserPatch, session: SessionDep):
 
 
 @router.delete("/{id}", status_code=204)
-async def delete_user(id: int, session: SessionDep):
+async def delete_user(
+    id: int,
+    session: SessionDep,
+    _user: Annotated[UserResponse, Depends(validate_admin)],
+):
     await UserController.delete_user(id, session)

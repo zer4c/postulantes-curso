@@ -8,10 +8,10 @@ class Config(BaseSettings):
     db_port: str
     db_name: str
     is_debug: bool = True
-    allowed_origins : list[str]
-    secret_key : str
-    algorithm : str
-    hours_session : int
+    allowed_origins: list[str]
+    secret_key: str
+    algorithm: str
+    hours_session: int
 
     model_config = SettingsConfigDict(env_file=".env")
 
@@ -20,4 +20,4 @@ class Config(BaseSettings):
         return f"postgresql+asyncpg://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
 
 
-config = Config() # pyright: ignore[reportCallIssue]
+config = Config()  # pyright: ignore[reportCallIssue]
